@@ -1,0 +1,10 @@
+<!-- contact-list.component.html -->
+<h2>Lista de Contatos</h2>
+<ul>
+  <li *ngFor="let c of contatos">
+    {{ c.nome }} - {{ c.email }} - {{ c.telefone }}
+    <button (click)="verDetalhes(c.id)">Detalhes</button>
+    <button (click)="remover(c.id)">Remover</button>
+  </li>
+</ul>
+<a routerLink="/contatos/novo">➕ Adicionar novo contato</a>
