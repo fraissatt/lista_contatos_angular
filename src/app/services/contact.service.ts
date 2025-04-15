@@ -1,30 +1,29 @@
-// src/app/services/contact.service.ts
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Contact } from '../models/contact';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
-  private contatos: Contact[] = [
-    { id: 1, nome: 'João', email: 'joao@mail.com', telefone: '1234-5678' },
-    { id: 2, nome: 'Maria', email: 'maria@mail.com', telefone: '8765-4321' }
-  ];
+  private apiUrl = 'http://localhost:3000/contatos';
 
-  getContatos(): Contact[] {
-    return this.contatos;
+  constructor(private http: HttpClient) {}
+
+  getContatos(): Observable<Contact[]> {
+    return this.http.get<Contact[]>(this.apiUrl);
   }
 
-  addContato(contato: Contact) {
-    contato.id = Date.now(); // ID simples
-    this.contatos.push(contato);
+  addContato(contato: Contact): Observable<Contact> {
+    return this.http.post<Contact>(this.apiUrl, contato);
   }
 
-  removeContato(id: number) {
-    this.contatos = this.contatos.filter(c => c.id !== id);
+  removeContato(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  getContatoById(id: number): Contact | undefined {
-    return this.contatos.find(c => c.id === id);
+  getContatoById(id: number): Observable<Contact> {
+    return this.http.get<Contact>(`${this.apiUrl}/${id}`);
   }
 }
