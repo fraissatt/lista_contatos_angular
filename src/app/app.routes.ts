@@ -8,4 +8,5 @@ export const routes: Routes = [
   { path: 'contatos', component: ContactListComponent },
   { path: 'contatos/novo', component: ContactFormComponent },
   { path: 'contatos/:id', component: ContactDetailComponent },
+  { path: 'favoritos', component: ContactListComponent },
 ];

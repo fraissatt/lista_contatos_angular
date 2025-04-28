@@ -1,9 +1,23 @@
 <h2>Lista de Contatos</h2>
+
+<div style="margin-bottom: 10px;">
+  <a routerLink="/contatos">📋 Todos</a> |
+  <a routerLink="/favoritos">⭐ Favoritos</a>
+</div>
+
+<select [(ngModel)]="grupoSelecionado" (change)="filtrarPorGrupo()">
+  <option value="">Todos os Grupos</option>
+  <option *ngFor="let grupo of gruposDisponiveis" [value]="grupo">{{ grupo }}</option>
+</select>
+
 <ul>
-  <li *ngFor="let c of contatos">
+  <li *ngFor="let c of contatosFiltrados">
+    <span *ngIf="c.isFavorite">⭐</span>
     {{ c.nome }} - {{ c.email }} - {{ c.telefone }}
+    <button (click)="alternarFavorito(c)">⭐ Alternar Favorito</button>
     <button (click)="verDetalhes(c.id)">Detalhes</button>
     <button (click)="remover(c.id)">Remover</button>
   </li>
 </ul>
+
 <a routerLink="/contatos/novo">➕ Adicionar novo contato</a>
