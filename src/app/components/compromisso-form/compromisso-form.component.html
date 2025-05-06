@@ -1,0 +1,50 @@
+<p-toast></p-toast>
+
+<h2>Cadastro de Compromisso</h2>
+
+<form (ngSubmit)="salvar()">
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col-12">
+      <label for="titulo">Título</label>
+      <input id="titulo" type="text" pInputText [(ngModel)]="compromisso.titulo" name="titulo" required />
+    </div>
+
+    <div class="p-field p-col-12">
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" pInputTextarea [(ngModel)]="compromisso.descricao" name="descricao"></textarea>
+    </div>
+
+    <div class="p-field p-col-12">
+      <label for="dataHora">Data e Hora</label>
+      <p-calendar
+        [(ngModel)]="compromisso.dataHora"
+        name="dataHora"
+        [showTime]="true"
+        hourFormat="24"
+        [showIcon]="true"
+        required
+        ></p-calendar>
+    </div>
+
+    <div class="p-field p-col-12">
+      <label for="local">Local</label>
+      <input id="local" type="text" pInputText [(ngModel)]="compromisso.local" name="local" required />
+    </div>
+
+    <div class="p-field p-col-12">
+      <label for="contato">Contato</label>
+      <p-dropdown
+        [options]="contatos"
+        [(ngModel)]="compromisso.contatoId"
+        name="contatoId"
+        optionLabel="nome"
+        placeholder="Selecione um contato"
+        required
+      ></p-dropdown>
+    </div>
+
+    <div class="p-field p-col-12">
+      <button type="submit" pButton label="Salvar" class="p-button-success"></button>
+    </div>
+  </div>
+</form>

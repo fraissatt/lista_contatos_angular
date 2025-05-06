@@ -1,0 +1,34 @@
+<h2>Agenda de Compromissos</h2>
+
+<div class="filtros" style="margin-bottom: 1rem; display: flex; gap: 10px; align-items: center;">
+  <label for="dataInicio">De:</label>
+  <p-calendar [(ngModel)]="dataInicio" inputId="dataInicio" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+
+  <label for="dataFim">Até:</label>
+  <p-calendar [(ngModel)]="dataFim" inputId="dataFim" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+
+  <p-button label="Aplicar Filtro" icon="pi pi-filter" (onClick)="aplicarFiltro()"></p-button>
+</div>
+
+<p-toast></p-toast>
+
+<p-accordion [multiple]="true" *ngIf="datasAgrupadas.length > 0; else nenhumResultado">
+  <ng-container *ngFor="let data of datasAgrupadas">
+    <p-accordionTab [header]="data">
+      <p-card *ngFor="let comp of compromissosAgrupados[data]" [style]="{ 'margin-bottom': '1rem' }">
+        <ng-template pTemplate="title">
+          {{ comp.titulo }}
+        </ng-template>
+        <ng-template pTemplate="content">
+          <p><strong>Horário:</strong> {{ comp.dataHora | date: 'shortTime' }}</p>
+          <p><strong>Local:</strong> {{ comp.local }}</p>
+          <p><strong>Descrição:</strong> {{ comp.descricao }}</p>
+        </ng-template>
+      </p-card>
+    </p-accordionTab>
+  </ng-container>
+</p-accordion>
+
+<ng-template #nenhumResultado>
+  <p>Nenhum compromisso encontrado para o período selecionado.</p>
+</ng-template>

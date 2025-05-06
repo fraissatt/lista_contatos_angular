@@ -1,13 +1,33 @@
 <h2>Detalhes do Contato</h2>
 
-<div *ngIf="contato; else naoEncontrado">
-  <p><strong>Nome:</strong> {{ contato.nome }}</p>
-  <p><strong>Email:</strong> {{ contato.email }}</p>
-  <p><strong>Telefone:</strong> {{ contato.telefone }}</p>
-  <a routerLink="/contatos">⬅ Voltar para a lista</a>
-</div>
+<p *ngIf="contato">
+  <strong>Nome:</strong> {{ contato.nome }}<br />
+  <strong>Email:</strong> {{ contato.email }}<br />
+  <strong>Telefone:</strong> {{ contato.telefone }}
+</p>
 
-<ng-template #naoEncontrado>
-  <p>Contato não encontrado.</p>
-  <a routerLink="/contatos">⬅ Voltar</a>
-</ng-template>
+<p-tabView>
+  <p-tabPanel header="Informações">
+    <p><strong>ID:</strong> {{ contato?.id }}</p>
+    <p><strong>Grupos:</strong> {{ contato?.groups?.join(', ') || 'Nenhum' }}</p>
+    <p><strong>Favorito:</strong> {{ contato?.isFavorite ? 'Sim' : 'Não' }}</p>
+  </p-tabPanel>
+
+  <p-tabPanel header="Compromissos Futuros">
+    <ng-container *ngIf="compromissos.length > 0; else vazio">
+      <p-card *ngFor="let c of compromissos" [style]="{ 'margin-bottom': '1rem' }">
+        <ng-template pTemplate="title">
+          {{ c.titulo }}
+        </ng-template>
+        <ng-template pTemplate="content">
+          <p><strong>Data:</strong> {{ c.dataHora | date: 'full' }}</p>
+          <p><strong>Local:</strong> {{ c.local }}</p>
+          <p><strong>Status:</strong> {{ c.status }}</p>
+        </ng-template>
+      </p-card>
+    </ng-container>
+    <ng-template #vazio>
+      <p>Sem compromissos futuros para este contato.</p>
+    </ng-template>
+  </p-tabPanel>
+</p-tabView>
